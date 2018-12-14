@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "description": "Tutorial benchmark for Rally",
+  "indices": [
+    {
+      "name": "geonames",
+      "body": "index.json",
+      "types": [ "docs" ]
+    }
+  ],
+  "corpora": [
+    {
+      "name": "rally-tutorial",
+      "documents": [
+        {
+          "source-file": "docu-15.json",
+          "document-count": 1050,
+          "uncompressed-bytes": 147142
+        }
+      ]
+    }
+  ],
+  "schedule": [
+    {
+      "operation": {
+        "operation-type": "delete-index"
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "create-index"
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "cluster-health",
+        "request-params": {
+          "wait_for_status": "green"
+        }
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "force-merge"
+      }
+    },
+      "clients": 8,
+      "warmup-iterations": 1000,
+      "iterations": 1000,
+      "target-throughput": 100
+    }
+  ]
+}
