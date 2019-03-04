@@ -6,20 +6,23 @@
     "docs": {
       "dynamic": "strict",
       "properties": {
-        "host": {
+        "geonameid": {
+          "type": "long"
+        },
+        "name": {
           "type": "text"
         },
-        "date": {
+        "latitude": {
+          "type": "double"
+        },
+        "longitude": {
+          "type": "double"
+        },
+        "country_code": {
           "type": "text"
         },
-        "request": {
-          "type": "text"
-        },
-        "result": {
-          "type": "integer"
-        },
-        "size": {
-          "type": "text"
+        "population": {
+          "type": "long"
         }
       }
     }

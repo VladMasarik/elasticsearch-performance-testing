@@ -1,36 +1,25 @@
 {
   "version": 2,
-  "description": "Tutorial benchmark for Rally",
+  "description": "Desc of a track.",
   "indices": [
     {
-      "name": "geonames",
+      "name": "nasa-logs",
       "body": "index.json",
       "types": [ "docs" ]
     }
   ],
   "corpora": [
     {
-      "name": "rally-tutorial",
+      "name": "nasa-logs-small",
       "documents": [
         {
-          "source-file": "docu-15.json",
-          "document-count": 1050,
-          "uncompressed-bytes": 147142
+          "source-file": "nasa-logs-10k.json",
+          "document-count": 1050
         }
       ]
     }
   ],
   "schedule": [
-    {
-      "operation": {
-        "operation-type": "delete-index"
-      }
-    },
-    {
-      "operation": {
-        "operation-type": "create-index"
-      }
-    },
     {
       "operation": {
         "operation-type": "cluster-health",
@@ -40,14 +29,10 @@
       }
     },
     {
-      "operation": {
-        "operation-type": "force-merge"
+      "operation":{
+        "operation-type": "bulk",
+        "bulk-size": 1050
       }
-    },
-      "clients": 8,
-      "warmup-iterations": 1000,
-      "iterations": 1000,
-      "target-throughput": 100
     }
   ]
 }
