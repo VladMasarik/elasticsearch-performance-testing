@@ -1,0 +1,5 @@
+POD=`oc get po -l component=elasticsearch -o name`
+NODE=`oc get $POD -o jsonpath='{.spec.nodeName}'`
+echo $POD
+echo $NODE
+oc label nodes $NODE elastic=true
