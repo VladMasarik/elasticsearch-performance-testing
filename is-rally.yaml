@@ -1,0 +1,19 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: relly
+  namespace: openshift
+  annotations:
+    openshift.io/display-name: EsRally
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations: null
+      from:
+        kind: DockerImage 
+        name: docker.io/vladmasarik/hackfest-dep:latest
+      importPolicy: {}
+      name: "1"
+      referencePolicy:
+        type: Source
