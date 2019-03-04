@@ -7,8 +7,9 @@ mv ./get-machine-run-tests.sh $GIT_REPO_BASE_DIR/origin-aggregated-logging/hack/
 # Run VM deployment script
 $GIT_REPO_BASE_DIR/origin-aggregated-logging/hack/get-machine-run-tests.sh
 
-rsync -avz ./start/ openshiftdevel:/home/origin/
+rsync -avz $GIT_REPO_BASE_DIR/elasticsearch-performance-testing/start/ openshiftdevel:/data/src/start/
 
-ssh -n openshiftdevel "bash start/init-vm.sh"
+ssh -n openshiftdevel "bash /data/src/start/init-vm.sh"
 
 ssh openshiftdevel
+
