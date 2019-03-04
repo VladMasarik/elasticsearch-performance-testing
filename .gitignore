@@ -1,0 +1,5 @@
+start/secret/*
+start/copy/data*
+start/copyOldLogs/data*
+get-machine-run-tests.sh
+private-readme.md
