@@ -2,12 +2,13 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: relly
-  namespace: openshift
+  namespace: openshift-logging
   annotations:
     openshift.io/display-name: EsRally
 spec:
+  dockerImageRepository: docker.io/vladmasarik/hackfest-dep
   lookupPolicy:
-    local: false
+    local: true
   tags:
     - annotations: null
       from:
@@ -16,4 +17,12 @@ spec:
       importPolicy: {}
       name: "1"
       referencePolicy:
-        type: Source
+        type: Local
+    - annotations: null
+      from:
+        kind: DockerImage 
+        name: docker.io/vladmasarik/hackfest-dep:latest
+      importPolicy: {}
+      name: "latest"
+      referencePolicy:
+        type: Local
