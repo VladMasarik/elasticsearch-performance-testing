@@ -13,7 +13,7 @@
       "name": "nasa-logs-small",
       "documents": [
         {
-          "source-file": "nasa-logs-10k.json",
+          "source-file": "data-nasa-logs-10k.json",
           "document-count": 1050
         }
       ]
