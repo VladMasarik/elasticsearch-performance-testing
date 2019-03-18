@@ -26,6 +26,6 @@ def atomicDec():
     print("Done!")
     return
     
-
-
 atomicDec()
+while getVal() != 0:
+    pass
