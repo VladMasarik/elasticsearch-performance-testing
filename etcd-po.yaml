@@ -10,7 +10,10 @@ spec:
   - name: etcd
     image: quay.io/coreos/etcd:latest
     ports:
-    - containerPort: 2379
+    - containerPort: 4001
       name: client
-    - containerPort: 2380
+    - containerPort: 7001
       name: peer
+    command:
+    - "sleep"
+    - "1000000"
