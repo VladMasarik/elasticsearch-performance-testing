@@ -1,7 +1,9 @@
-start/secret/*
+start/esrally-container/secret/*
 start/copy/data*
 start/copyOldLogs/data*
 get-machine-run-tests.sh
 private-readme.md
 start/copyOldLogs/NASA_access_log_Jul95.gz
 .vscode*
+testYamls
+notPublic
