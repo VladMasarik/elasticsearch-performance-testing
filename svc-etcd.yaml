@@ -6,8 +6,7 @@ metadata:
 spec:
   ports:
   - port: 2379
-    name: client
-  - port: 2380
-    name: peer
+    protocol: TCP
+    targetPort: 2379
   selector:
-    name: etcd
+    app: etcd
