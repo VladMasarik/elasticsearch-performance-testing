@@ -1,2 +1,0 @@
-#esrally --track=geopoint --target-hosts=elasticsearch --pipeline=benchmark-only --client-options="use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
-esrally --track-path=$HOME/copy --target-hosts=elasticsearch --pipeline=benchmark-only --client-options="use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
