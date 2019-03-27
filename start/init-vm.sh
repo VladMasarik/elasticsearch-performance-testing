@@ -1,16 +1,44 @@
+# First error. Prometheus does not see ES for some reason
+
+cd ~/projects/elasticsearch-performance-testing
+
+oc create -f dep-etcd.yaml
+oc create -f svc-etcd.yaml
+
+oc project openshift-monitoring
+
+oc create -f cm-dashboard-logging
+oc create -f dep-grafana
+oc create -f svc-grafana
+
+oc patch route grafana -p '{"spec":{"to":{"name":"grafana-logging"}}}'
+
 oc project openshift-logging
 
-mkdir /data/src/start/secret && cd /data/src/start/secret
 
-oc extract secrets/logging-elasticsearch
+# OK ^^^
 
-cd ..
 
-docker build -t rallyperf .
 
-oc set image ds logging-fluentd fluentd-elasticsearch=openshift/origin-logging-fluentd
-oc set image $(oc get dc -o name | grep es) elasticsearch=openshift/origin-logging-elasticsearch5
-oc rollout cancel $(oc get dc -o name | grep es)
-oc rollout latest $(oc get dc -o name | grep es)
-oc set image deploymentconfig.apps.openshift.io/logging-kibana kibana=openshift/origin-logging-kibana5
-oc delete po logging-kibana-1-deploy
+python3 negativeNodeLabel.py
+
+oc delete po bootstrap
+
+
+
+cd start/secret
+
+rm *
+
+oc extract secrets/elasticsearch
+
+cd -
+
+docker build -t docker.io/vladmasarik/hackfest-dep /home/vmasarik/projects/elasticsearch-performance-testing/start
+docker push docker.io/vladmasarik/hackfest-dep
+
+oc create -f is-rally.yaml
+
+oc create -f job-rell.yaml
+
+python3 revertToPlaceholders.py
