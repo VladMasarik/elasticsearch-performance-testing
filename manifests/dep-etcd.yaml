@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: etcd
+  namespace: openshift-logging
+  labels:
+    app: etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etcd
+  template:
+    metadata:
+      generateName: etcd
+      namespace: openshift-logging
+      labels:
+        app: etcd
+    spec:
+      containers:
+      - name: etcd
+        image: quay.io/coreos/etcd:latest
+        env:
+        - name: ETCDCTL_API
+          value: "3"
+        ports:
+        - containerPort: 2379
+          name: client
+        - containerPort: 2380
+          name: peer
+        command:
+        - "etcd"
+        - "--data-dir=/var/lib/etcd"
+        - "--listen-client-urls=http://0.0.0.0:2379"
+        - "--advertise-client-urls=http://etcd.openshift-logging.svc:2379"
+        volumeMounts:
+        - mountPath: /var/lib/etcd
+          name: data-dir
+      volumes:
+      - name: data-dir
+        emptyDir: {}

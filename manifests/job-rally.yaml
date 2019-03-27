@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: esrally
+  namespace: openshift-logging
+spec:
+  completions: <node-number-placeholder>
+  parallelism: <node-number-placeholder>
+  template:
+    metadata:
+      annotations:
+        alpha.image.policy.openshift.io/resolve-names: '*'
+      name: esrally
+      namespace: openshift-logging
+      labels:
+        app: esrally
+    spec:
+      containers:
+      - name: esrally
+        image: esrally:latest
+      restartPolicy: Never
+      nodeSelector:
+        esrally: present
