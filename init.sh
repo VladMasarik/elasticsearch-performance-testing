@@ -1,6 +1,16 @@
 #!/bin/bash
+
+
+
+
+
 oc create -f manifests/dep-etcd.yaml
 oc create -f manifests/svc-etcd.yaml
+
+
+
+
+
 
 oc project openshift-monitoring
 
