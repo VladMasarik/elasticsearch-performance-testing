@@ -1,3 +1,3 @@
 gzip -d $HOME/copy/multiple/data-nasa-logs-10all.json.gz
 /home/rally/copy/polling
-esrally --track-path=$HOME/copy/idol --target-hosts=elasticsearch --pipeline=benchmark-only --client-options="use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
+esrally --track-path=$HOME/copy/multiple --target-hosts=elasticsearch --on-error=abort --pipeline=benchmark-only --client-options="timeout:60,use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
