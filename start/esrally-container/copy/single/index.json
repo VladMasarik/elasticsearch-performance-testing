@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "index.number_of_replicas": 0
+  },
+  "mappings": {
+    "docs": {
+      "dynamic": "strict",
+      "properties": {
+        "host": {
+          "type": "text"
+        },
+        "date": {
+          "type": "text"
+        },
+        "request": {
+          "type": "text"
+        },
+        "result": {
+          "type": "integer"
+        },
+        "size": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
