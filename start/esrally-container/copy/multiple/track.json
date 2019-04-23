@@ -1,4 +1,4 @@
-{% set index_count = 300 %}
+{% set index_count = 1 %}
 {
   "version": 2,
   "description": "Desc of a track.",
