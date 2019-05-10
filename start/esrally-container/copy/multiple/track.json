@@ -1,4 +1,4 @@
-{% set index_count = 1 %}
+{% set index_count = 32 %}
 {
   "version": 2,
   "description": "Desc of a track.",
@@ -20,7 +20,7 @@
         {
           "source-file": "data-nasa-logs-10all.json",
           "includes-action-and-meta-data": true,
-          "document-count": 1891714
+          "document-count": 1400000
         }
       ]
     }
@@ -47,7 +47,7 @@
     {
       "operation": {
         "operation-type": "bulk",
-        "bulk-size": 200
+        "bulk-size": 20000
       }
     }
   ]
