@@ -85,10 +85,7 @@ def main(arguments):
         "sed -i \'s/<node-number-placeholder>/{}/g\' manifests/job-rally.yaml".format(nodeCount),
         "sed -i \'s/<docker-image-placeholder>/{}/g\' manifests/is-rally.yaml".format(arguments["REPOSITORY"]),
         "mkdir -p start/esrally-container/secret",
-        "cd start/esrally-container/secret",
-        "rm *",
-        "oc extract secrets/elasticsearch",
-        "cd -",
+        "oc extract secrets/elasticsearch --to=start/esrally-container/secret --confirm",
         "docker build -t {} ./start/esrally-container".format(arguments["REPOSITORY"]),
         "docker push {}".format(arguments["REPOSITORY"]),
         "oc create -f manifests/is-rally.yaml",
@@ -115,14 +112,4 @@ def main(arguments):
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='Performance Stack Deploy Aplha')
     print(arguments)
-    
-    commands = [
-        "cd start/esrally-container/secret",
-        "rm *",
-        "oc extract secrets/elasticsearch",
-        "cd -",
-    ]
-    for i in commands:
-        print(i)
-        cmd(i)
-    #main(arguments)
+    main(arguments)
