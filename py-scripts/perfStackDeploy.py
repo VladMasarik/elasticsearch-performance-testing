@@ -82,7 +82,7 @@ def main(arguments):
     print(nodeCount)
 
     rep("start/esrally-container/copy/scr", "<rallyFolder-placeholder>", rallyFolder)
-    rep("manifests/job-rally.yaml", "<node-number-placeholder>", "{}".format(nodeCount))
+    rep("manifests/job-rally.yaml", "<node-number-placeholder>", "\"{}\"".format(nodeCount))
     rep("manifests/is-rally.yaml", "<docker-image-placeholder>", arguments["REPOSITORY"])
     
 
@@ -104,7 +104,7 @@ def main(arguments):
 
 
     rep("start/esrally-container/copy/scr", rallyFolder, "<rallyFolder-placeholder>")
-    rep("manifests/job-rally.yaml", "{}".format(nodeCount), "<node-number-placeholder>")
+    rep("manifests/job-rally.yaml", "\"{}\"".format(nodeCount), "<node-number-placeholder>")
     rep("manifests/is-rally.yaml", arguments["REPOSITORY"], "<docker-image-placeholder>")
 
 if __name__ == '__main__':
