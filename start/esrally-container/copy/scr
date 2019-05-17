@@ -1,5 +1,7 @@
-gzip -d $HOME/copy/multiple/data-nasa-logs-10all.json.gz
+tar -C $HOME/copy/ -xzvf $HOME/copy/rallyFolder.tar.gz
 
 /home/rally/copy/polling
 
-esrally --track-path=$HOME/copy/multiple --target-hosts=elasticsearch --pipeline=benchmark-only --client-options="timeout:60,use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
+esrally --track-path=$HOME/copy/<rallyFolder-placeholder> --target-hosts=elasticsearch --pipeline=benchmark-only --client-options="timeout:60,use_ssl:true,verify_certs:false,ca_certs:'$HOME/secret/admin-ca',client_cert:'$HOME/secret/admin-cert',client_key:'$HOME/secret/admin-key'"
+
+# gzip -d $HOME/copy/multiple/data-nasa-logs-10all.json.gz
