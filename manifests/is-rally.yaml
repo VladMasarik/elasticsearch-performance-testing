@@ -6,14 +6,14 @@ metadata:
   annotations:
     openshift.io/display-name: EsRally
 spec:
-  dockerImageRepository: docker.io/vladmasarik/hackfest-dep
+  dockerImageRepository: <docker-image-placeholder>
   lookupPolicy:
     local: true
   tags:
     - annotations: null
       from:
         kind: DockerImage 
-        name: docker.io/vladmasarik/hackfest-dep:latest
+        name: <docker-image-placeholder>:latest
       importPolicy: {}
       name: "latest"
       referencePolicy:
