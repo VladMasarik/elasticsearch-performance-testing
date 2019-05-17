@@ -30,7 +30,7 @@ python3 py-scripts/negativeNodeLabel.py
 oc delete po bootstrap
 
 
-
+mkdir -p start/esrally-container/secret
 cd start/esrally-container/secret
 
 rm *
