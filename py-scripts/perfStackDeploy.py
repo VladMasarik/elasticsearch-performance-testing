@@ -15,7 +15,7 @@ Options:
 
 """
 from docopt import docopt
-import subprocess, shlex, sys, time, os
+import subprocess, shlex, sys, time, os, fileinput
 
 
 def cmd(shellCommand):
@@ -45,6 +45,12 @@ def getRallyNodes():
 
     return allNodes
 
+def rep(filePath, old, new):
+    for line in fileinput.input([filePath], inplace=True):
+        print(line.replace(old, new), end='')
+
+
+
 def main(arguments):
     rallyFolder = os.path.basename(os.path.dirname(arguments["FOLDER"]))
 
@@ -61,7 +67,7 @@ def main(arguments):
 
     for i in commands:
         print(i)
-        cmd(i)
+        print(cmd(i))
 
 
     allNodes = getRallyNodes()
@@ -75,39 +81,31 @@ def main(arguments):
     nodeCount = len(allNodes)
     print(nodeCount)
 
-
+    rep("start/esrally-container/copy/scr", "<rallyFolder-placeholder>", rallyFolder)
+    rep("manifests/job-rally.yaml", "<node-number-placeholder>", "{}".format(nodeCount))
+    rep("manifests/is-rally.yaml", "<docker-image-placeholder>", arguments["REPOSITORY"])
     
 
     commands = [
         "tar -zcvf rallyFolder.tar.gz {}".format(arguments["FOLDER"]),
         "mv rallyFolder.tar.gz start/esrally-container/copy/",
-        "sed -i \'s/<rallyFolder-placeholder>/{}/g\' start/esrally-container/copy/scr".format(rallyFolder),
-        "sed -i \'s/<node-number-placeholder>/{}/g\' manifests/job-rally.yaml".format(nodeCount),
-        "sed -i \'s/<docker-image-placeholder>/{}/g\' manifests/is-rally.yaml".format(arguments["REPOSITORY"]),
         "mkdir -p start/esrally-container/secret",
         "oc extract secrets/elasticsearch --to=start/esrally-container/secret --confirm",
         "docker build -t {} ./start/esrally-container".format(arguments["REPOSITORY"]),
         "docker push {}".format(arguments["REPOSITORY"]),
         "oc create -f manifests/is-rally.yaml",
         "oc create -f manifests/job-rally.yaml",
-        "sed -i \'s/{}/<node-number-placeholder>/g\' manifests/job-rally.yaml".format(nodeCount),
-        "sed -i \'s/{}/<docker-image-placeholder>/g\' manifests/is-rally.yaml".format(arguments["REPOSITORY"]),
-        "sed -i \'s/{}/<rallyFolder-placeholder>/g\' start/esrally-container/copy/scr".format(rallyFolder)
     ]
     
 
-
-
     for i in commands:
         print(i)
-        cmd(i)
+        print(cmd(i))
 
 
-    
-
-
-    
-
+    rep("start/esrally-container/copy/scr", rallyFolder, "<rallyFolder-placeholder>")
+    rep("manifests/job-rally.yaml", "{}".format(nodeCount), "<node-number-placeholder>")
+    rep("manifests/is-rally.yaml", arguments["REPOSITORY"], "<docker-image-placeholder>")
 
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='Performance Stack Deploy Aplha')
