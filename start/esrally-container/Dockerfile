@@ -18,6 +18,4 @@ RUN esrally
 ADD ./secret/ $HOME/secret/
 ADD ./copy/ $HOME/copy/
 
-RUN chmod -R 777 $HOME
-
 CMD ["scl", "enable", "git19", "--", "sh", "$HOME/copy/scr"]
