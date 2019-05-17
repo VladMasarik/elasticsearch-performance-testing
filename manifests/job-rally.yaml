@@ -18,6 +18,9 @@ spec:
       containers:
       - name: esrally
         image: esrally:latest
+        env:
+        - name: NODE_COUNT
+          value: <node-number-placeholder>
       restartPolicy: Never
       nodeSelector:
         esrally: present
