@@ -18,4 +18,6 @@ RUN esrally
 ADD ./secret/ $HOME/secret/
 ADD ./copy/ $HOME/copy/
 
+RUN find $HOME -type d -exec chmod 777 {} \;
+
 CMD ["scl", "enable", "git19", "--", "sh", "$HOME/copy/scr"]
