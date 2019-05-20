@@ -56,16 +56,22 @@ func main() {
 		log.Fatal(err)
 	}
 
-	nodeCount := getCounter(ctx, cli)
 
-	_, err = keyValue.Txn(ctx).
-		If(clientv3.Compare(clientv3.Value("counter"), "=", strconv.Itoa(nodeCount))).
-		Then(clientv3.OpPut("counter", strconv.Itoa(nodeCount-1))).
-		Commit()
+	success := false
+	for success == false {
+		nodeCount := getCounter(ctx, cli)
 
-	if err != nil {
-		log.Fatal(err)
+		resp, err = keyValue.Txn(ctx).
+			If(clientv3.Compare(clientv3.Value("counter"), "=", strconv.Itoa(nodeCount))).
+			Then(clientv3.OpPut("counter", strconv.Itoa(nodeCount-1))).
+			Commit()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		success = resp.Succeeded
 	}
+	
 
 	log.Println("Waiting for all pods to complete...")
 
