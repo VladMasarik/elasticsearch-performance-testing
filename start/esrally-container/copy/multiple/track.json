@@ -20,7 +20,7 @@
         {
           "source-file": "data-nasa-logs-10all.json",
           "includes-action-and-meta-data": true,
-          "document-count": 700000
+          "document-count": 1050
         }
       ]
     }
