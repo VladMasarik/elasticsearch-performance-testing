@@ -14,8 +14,8 @@ $ pip3 install -r requirements.txt
 - Have an access to an Openshift cluster and be logged in. Verify by executing:
 ```
 $ oc get nodes
+# The output should be a list of nodes.
 ```
-The output should be list of nodes.
 - The Openshift cluster has to have a properly deployed Origin Aggregate Logging component. To verify this, go to Openshift web UI and access the Prometheus web UI. Then, navigate to `Status` and `Targets` tab. Find the Elasticsearch entry, based on the name of the service monitor in the `openshift-logging` project.
 - Have an access to a container image repository where the script can upload an image.
 - Have a folder containing all the necessary files for the Rally. You can use the demo folder `start/esrally-container/copy/single`.
