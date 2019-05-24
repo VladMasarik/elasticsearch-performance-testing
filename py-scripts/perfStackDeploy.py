@@ -54,7 +54,10 @@ def rep(filePath, old, new):
 
 
 def main(arguments):
-    rallyFolder = os.path.basename(os.path.dirname(arguments["FOLDER"]))
+    if (arguments["FOLDER"][-1:] == "/"):
+        rallyFolder = os.path.basename(os.path.dirname(arguments["FOLDER"]))
+    else:
+        rallyFolder = os.path.basename(arguments["FOLDER"])
 
     commands = [
         
