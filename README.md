@@ -46,6 +46,12 @@ python3 py-scripts/perfStackDeploy.py --help
 - `py-scripts` contains mainly `perfStackDeploy.py` which is the main script executing the systems logic, and `label-for-bulk.py` which is a script used to add metadata to the testing data.
 - `start/esrally-container` contains Dockerfile used to create the testing container image that should be executed and `copy` has files that should be copied into the image.
 
+## Notes
+
+- As of 20th of May the CLO does not deploy the ES ServiceMonitor properly. AFAIK the Prometheus does not see it in a `openshift-logging` project, and I was not able to fix it. You can still see the CPU and metrics usage of the ES though.
+- The script does not delete the instances it deploys. Therefore, if you want to run the script again you need to delete those objects. `oc delete -f manifests/` is more than enough. Secrets get replaced and so does the tarred testing file, therefore, you do not have to delete those.
+- If you want to create your own testing track you should start with the [Rally](https://esrally.readthedocs.io/en/stable/track.html) documentation.
+
 ## License
 
 Apache License 2.0
