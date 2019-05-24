@@ -41,7 +41,7 @@ python3 py-scripts/perfStackDeploy.py --help
 
 ## Folder Architecture
 
-- `go-code` contains Golang source code. `polling.go` is used to build the synchronization binary placed into the Rally container.
+- `polling.go` is used to build the synchronization binary placed into the Rally container.
 - `manifests` contains configuration of all the objects that are used.
 - `py-scripts` contains mainly `perfStackDeploy.py` which is the main script executing the systems logic, and `label-for-bulk.py` which is a script used to add metadata to the testing data.
 - `start/esrally-container` contains Dockerfile used to create the testing container image that should be executed and `copy` has files that should be copied into the image.
