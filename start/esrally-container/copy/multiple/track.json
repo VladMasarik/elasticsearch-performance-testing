@@ -46,15 +46,6 @@
     },
     {
       "operation": {
-        "operation-type": "raw-request",
-        "method": "PUT",
-        "path": "/_cluster/settings",
-        "header": "Content-Type: application/json",
-        "body": {"persistent": {"indices.recovery.max_bytes_per_sec" : "40mb"}}
-      }
-    },
-    {
-      "operation": {
         "operation-type": "bulk",
         "bulk-size": 1000
       }
