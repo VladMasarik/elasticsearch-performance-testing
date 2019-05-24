@@ -1,4 +1,4 @@
-"""Perf Stack Deployment.
+"""Performance testign stack deployment.
 
 Usage:
   perfStackDeploy.py REPOSITORY FOLDER
@@ -17,11 +17,12 @@ Options:
 from docopt import docopt
 import subprocess, shlex, sys, time, os, fileinput
 
-
+# Execute a bash command and return its output
 def cmd(shellCommand):
     proc = subprocess.Popen(shlex.split(shellCommand), stdout=subprocess.PIPE)
     return proc.communicate()[0].decode("utf-8")
 
+# Returns nodes that should run Rally pods
 def getRallyNodes():
     allNodes = cmd("oc get nodes -o=jsonpath='{.items[*].metadata.name}'").split(" ")
     print(allNodes)
@@ -45,6 +46,7 @@ def getRallyNodes():
 
     return allNodes
 
+# Replace string in a file
 def rep(filePath, old, new):
     for line in fileinput.input([filePath], inplace=True):
         print(line.replace(old, new), end='')
@@ -55,8 +57,13 @@ def main(arguments):
     rallyFolder = os.path.basename(os.path.dirname(arguments["FOLDER"]))
 
     commands = [
+        
+        # Deploy ETCD
+        "oc project openshift-logging",
         "oc create -f manifests/dep-etcd.yaml",
         "oc create -f manifests/svc-etcd.yaml",
+        
+        # Deploy Grafana
         "oc project openshift-monitoring",
         "oc create -f manifests/cm-dashboard-logging.yaml",
         "oc create -f manifests/dep-grafana.yaml",
@@ -73,6 +80,7 @@ def main(arguments):
     allNodes = getRallyNodes()
     print(allNodes)
 
+    # Label nodes
     print("Labeling...")
     for node in allNodes:
         cmd("oc label nodes {} esrally=present".format(node))
@@ -80,19 +88,27 @@ def main(arguments):
 
     nodeCount = len(allNodes)
     print(nodeCount)
-
+    
+    # Modify manifest files
     rep("start/esrally-container/copy/scr", "<rallyFolder-placeholder>", rallyFolder)
     rep("manifests/job-rally.yaml", "<node-number-placeholder>", "\"{}\"".format(nodeCount))
     rep("manifests/is-rally.yaml", "<docker-image-placeholder>", arguments["REPOSITORY"])
     
 
     commands = [
+        # Compress the testing data
         "tar -zcvf rallyFolder.tar.gz {}".format(arguments["FOLDER"]),
         "mv rallyFolder.tar.gz start/esrally-container/copy/",
+
+        # Extract secrets
         "mkdir -p start/esrally-container/secret",
         "oc extract secrets/elasticsearch --to=start/esrally-container/secret --confirm",
+
+        # Builld the image
         "docker build -t {} ./start/esrally-container".format(arguments["REPOSITORY"]),
         "docker push {}".format(arguments["REPOSITORY"]),
+
+        # Deploy Rally and start testing
         "oc create -f manifests/is-rally.yaml",
         "oc create -f manifests/job-rally.yaml",
     ]
@@ -102,7 +118,7 @@ def main(arguments):
         print(i)
         print(cmd(i))
 
-
+    # Retunr the manifest file back to their previous form
     rep("start/esrally-container/copy/scr", rallyFolder, "<rallyFolder-placeholder>")
     rep("manifests/job-rally.yaml", "\"{}\"".format(nodeCount), "<node-number-placeholder>")
     rep("manifests/is-rally.yaml", arguments["REPOSITORY"], "<docker-image-placeholder>")
