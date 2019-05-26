@@ -1,5 +1,7 @@
 package main
 
+// Copyright (c) <2019>, <Vladimir Masarik>
+
 import (
 	"context"
 	"log"

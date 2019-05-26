@@ -17,6 +17,8 @@ Options:
 from docopt import docopt
 import subprocess, shlex, sys, time, os, fileinput
 
+# Copyright (c) <2019>, <Vladimir Masarik>
+
 # Execute a bash command and return its output
 def cmd(shellCommand):
     proc = subprocess.Popen(shlex.split(shellCommand), stdout=subprocess.PIPE)
