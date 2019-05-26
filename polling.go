@@ -1,6 +1,6 @@
 package main
 
-// Copyright (c) <2019>, <Vladimir Masarik>
+// Copyright (c) 2019, Vladimir Masarik
 
 import (
 	"context"
